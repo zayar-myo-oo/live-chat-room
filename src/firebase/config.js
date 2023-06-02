@@ -1,6 +1,10 @@
 // Import the functions you need from the SDKs you need
-import { firebase } from "firebase/app";
-import "firebase/firestore"
+import { initializeApp } from "firebase/app";
+import { getFirestore, serverTimestamp } from "firebase/firestore";
+import { getAuth } from  "firebase/auth";
+
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyCzbAcWsWs7Jzo0GeIjyXLiwN5nXCrOgGg",
   authDomain: "live-chat-room-aa157.firebaseapp.com",
@@ -12,8 +16,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-let db = firebase.firestore();
-let timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const app = initializeApp(firebaseConfig);
+const db =getFirestore(app);
+const auth = getAuth(app);
+let timestamp = serverTimestamp();
 
-export { timestamp, db }
+export { timestamp, db , auth};

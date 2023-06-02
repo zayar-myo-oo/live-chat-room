@@ -9,8 +9,7 @@
 
 <script>
 import { ref } from 'vue';
-/* eslint-disable */
-/* eslint-disable no-debugger, no-console */
+
 export default {
   setup() {
     let email = ref("");
