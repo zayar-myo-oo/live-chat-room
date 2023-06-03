@@ -12,6 +12,7 @@ const routes = [
     path: '/chatroom',
     name: 'Chatroom',
     component: Chatroom
+
   },
 ]
 
