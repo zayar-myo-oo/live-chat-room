@@ -8,17 +8,19 @@
 <script>
 import { ref } from 'vue';
 import { auth, timestamp } from '../firebase/config';
+import useCollection from '@/composables/useCollection';
 export default {
   setup() {
     
     let message = ref("");
+    let { error, addDoc } = useCollection("message");
     let handleSubmit = () => {
       let chat = {
         message:message.value,
         name: auth.currentUser.displayName,
         created_at: timestamp
       }
-      console.log(chat);
+      addDoc(chat);
       message.value=""
     }
     return{message,handleSubmit}
