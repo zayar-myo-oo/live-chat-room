@@ -13,14 +13,14 @@ export default {
   setup() {
     
     let message = ref("");
-    let { error, addDoc } = useCollection("message");
+    let { error, dbAddDoc } = useCollection("message");
     let handleSubmit = () => {
       let chat = {
         message:message.value,
         name: auth.currentUser.displayName,
         created_at: timestamp
       }
-      addDoc(chat);
+      dbAddDoc(chat);
       message.value=""
     }
     return{message,handleSubmit}

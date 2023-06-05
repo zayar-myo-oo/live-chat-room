@@ -1,22 +1,21 @@
 import { ref } from "vue";
 import { db } from "../firebase/config";
-// import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 let useCollection = (_collection) => {
   let error = ref(null);
-  let addDoc = async (_doc) => {
+  let dbAddDoc = async (_doc) => {
     try {
-      await db.collection(_collection).add(_doc);
-      // let dbCollection = collection(db, _collection);
-      // let dbDoc = await addDoc(dbCollection, _doc)
-      // console.log(dbDoc);
+      let dbCollection = collection(db, _collection);
+      let dbDoc = await addDoc(dbCollection, _doc)
+      console.log(dbDoc);
     } catch (e) {
       error.value = e.message;
       console.log(e.message)
     }
-
+    //don't forget the set the rule
   };
 
-  return { error, addDoc }
+  return { error, dbAddDoc }
 }
 
 export default useCollection;

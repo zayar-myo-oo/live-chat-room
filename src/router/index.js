@@ -5,20 +5,28 @@ import { auth } from '../firebase/config'
 
 const routes = [
   {
-    path: '/',
-    name: 'Welcome',
-    component: Welcome
+    path: "/",
+    name: "Welcome",
+    component: Welcome,
+    beforeEnter(to, from, next) {
+      let user = auth.currentUser;
+      if (!user) {
+        next();
+      } else {
+        next({ name: "Chatroom" })
+      }
+    }
   },
   {
     path: '/chatroom',
     name: 'Chatroom',
     component: Chatroom,
-    beforeEnter:(to,from,next)=>{
-      let user=auth.currentUser
-      if(user){
+    beforeEnter: (to, from, next) => {
+      let user = auth.currentUser
+      if (user) {
         next();
-      }else{
-        next({name:"Welcome"});
+      } else {
+        next({ name: "Welcome" });
       }
 
     }
