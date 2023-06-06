@@ -13,7 +13,7 @@ export default {
   setup() {
     
     let message = ref("");
-    let { error, dbAddDoc } = useCollection("message");
+    let { error, dbAddDoc } = useCollection("messages");
     let handleSubmit = () => {
       let chat = {
         message:message.value,

@@ -7,7 +7,6 @@ let useCollection = (_collection) => {
     try {
       let dbCollection = collection(db, _collection);
       let dbDoc = await addDoc(dbCollection, _doc)
-      console.log(dbDoc);
     } catch (e) {
       error.value = e.message;
       console.log(e.message)

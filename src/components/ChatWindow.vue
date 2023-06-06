@@ -14,6 +14,7 @@
 import { computed, onUpdated, ref } from 'vue'
 import { db } from '../firebase/config'
 import { formatDistanceToNow } from "date-fns"
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore"
 export default {
   setup() {
     let messages = ref([]);
@@ -30,15 +31,18 @@ export default {
         return { ...msg, created_at: formatTime }// name,msg,created_at:second nano
       })// [{}]
     })
-    db.collection("messages").orderBy("created_at").onSnapshot((snap) => {
-      let results = [];//this onsnapshot run again and array empty again
-      snap.docs.forEach((doc) => {
-        let document = { ...doc.data(), id: doc.id }
-        doc.data().created_at && results.push(document);
+    const messagesRef = collection(db, "messages");
+    const messagesQuery = query(messagesRef, orderBy("created_at"));
+    onSnapshot(messagesQuery, (snap) => {
+     
+        let results = [];//this onsnapshot run again and array empty again
+        snap.docs.forEach((doc) => {
+          let document = { ...doc.data(), id: doc.id }
+          doc.data().created_at && results.push(document);
+        })
+        messages.value = results;
       })
-      messages.value = results;
-    })
-    return { messages, formattedMessages, msgBox };
+      return { messages, formattedMessages, msgBox };
   }
 }
 </script>
